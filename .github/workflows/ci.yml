@@ -1,0 +1,27 @@
+name: Pr Test
+
+on:
+  pull_request:
+
+env:
+  CI: true
+
+jobs:
+  ciTest:
+    uses: ./.github/workflows/ci-template.yml
+
+  cypress:
+    needs: ["ciTest"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cypress
+        run: echo "I CAN HAZ CYPRESS!"
+
+      - name: GUID from ci-test
+        run: |
+          echo "=> ${{ needs.ciTest.outputs.ciGuid }}"

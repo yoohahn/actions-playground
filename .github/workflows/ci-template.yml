@@ -1,0 +1,40 @@
+name: Ci
+
+on:
+  workflow_call:
+    outputs:
+      ciGuid:
+        description: "Guid of current run"
+        value: ${{ jobs.test.outputs.versionOutput }}
+
+env:
+  CI: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      versionOutput: ${{ steps.version.outputs.ciGuid }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Uses Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Jest
+        run: yarn jest
+
+      - name: Set Version
+        id: version
+        run: |
+          MY_VERSION=`uuidgen`
+          echo "The version is: '$MY_VERSION'"
+          echo "ciGuid=$MY_VERSION" >> $GITHUB_OUTPUT
