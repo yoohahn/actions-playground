@@ -1,0 +1,22 @@
+{
+  "name": "actions-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "yarn jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoohahn/actions-playground.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yoohahn/actions-playground/issues"
+  },
+  "homepage": "https://github.com/yoohahn/actions-playground#readme",
+  "dependencies": {
+    "jest": "^29.3.1"
+  }
+}

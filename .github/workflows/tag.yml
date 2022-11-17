@@ -1,0 +1,35 @@
+name: Tag master
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  tag-test:
+    uses: ./.github/workflows/ci-template.yml
+
+  tag:
+    needs: ["tag-test"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # see if the ref and sha is the same as the only-master.yml
+      - name: Git Ref
+        run: |
+          echo "${{ github.ref }}"
+
+      - name: Git Sha
+        run: |
+          echo "${{ github.sha }}"
+
+      - name: Tag
+        run: echo TAGGING
+
+      - name: Catting
+        run: cat package.json | jq
